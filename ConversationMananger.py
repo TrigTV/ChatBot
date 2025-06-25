@@ -41,10 +41,7 @@ class ConversationManager:
 
         client = OpenAI(api_key=self.api_key, base_url= self.base_url)
 
-        messages = []
-        if self.system_message:
-            messages.append({"role": "system", "content": self.system_message})
-        messages.append({"role": "user", "content": prompt})
+        messages = list(self.conversation_history)
 
         response = client.chat.completions.create(
             model=model or self.default_model,
@@ -53,4 +50,9 @@ class ConversationManager:
             messages=messages,
         )
 
-        return response.choices[0].message.content.strip()
+        assistant_content = response.choices[0].message.content.strip()
+        self.conversation_history.append(
+            {"role": "assitant", "content": assistant_content}
+        )
+
+        return assistant_content
