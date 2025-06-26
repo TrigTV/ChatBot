@@ -138,7 +138,7 @@ class ConversationManager:
             raise ValueError("Custom system message cannot be empty.")
         
         self.system_messages["Custom"] = message.strip()
-        self.system_message = self.system_messages["custom"]
+        self.system_message = self.system_messages["Custom"]
         self.update_system_message_in_history()
 
     def update_system_message_in_history(self) -> None:
